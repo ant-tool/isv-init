@@ -1,0 +1,31 @@
+{
+  "name": "isv-init",
+  "version": "0.0.1",
+  "description": "isv-init is an antd-mobile-oriented scaffold management tool for isv.",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ant-tool/isv-init.git"
+  },
+  "homepage": "https://github.com/ant-tool/isv-init",
+  "bugs": {
+    "url": "https://github.com/ant-tool/isv-init/issues"
+  },
+  "author": "pigcan <jiangjay818@gmail.com>",
+  "bin": {
+    "isv-init": "./bin/isv-init"
+  },
+  "scripts": {
+  },
+  "dependencies": {
+    "colorful": "^2.1.0",
+    "commander": "2.9.0",
+    "inquirer": "^1.0.0",
+    "through2": "2.0.x",
+    "vinyl-fs": "2.4.x",
+    "which": "1.2.x"
+  },
+  "devDependencies": {
+    "rimraf": "~2.4.4"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,42 @@
+{
+  "name": "antm-boilerplate",
+  "version": "0.0.1",
+  "description": "A Project With Antd-Mobile Buildin",
+  "scripts": {
+    "start": "NODE_ENV=development dora -p 8001 --plugins webpack",
+    "test": "atool-test",
+    "lint": "eslint --ext .js,.jsx src",
+    "simulator": "NODE_ENV=development dora -p 8001 --plugins 'webpack,livereload,config-manager?path=./mobile.config.js|simOpts,simulator'",
+    "build": "NODE_ENV=production atool-build -o www --config ./webpack.config.js"
+  },
+  "keywords": [
+    "standard"
+  ],
+  "author": "",
+  "entry": {
+    "index": "./src/entry/index",
+    "menu": "./src/entry/menu"
+  },
+  "dependencies": {
+    "antd-mobile": "~1.0.0-alpha.9",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2"
+  },
+  "devDependencies": {
+    "atool-build": "^0.9.0",
+    "atool-test": "^0.5.1",
+    "babel-eslint": "~6.0.0",
+    "babel-plugin-import": "^1.0.0",
+    "dora": "^0.4.0",
+    "dora-plugin-config-manager": "^0.2.3",
+    "dora-plugin-livereload": "^0.5.0",
+    "dora-plugin-simulator": "^0.2.0",
+    "dora-plugin-webpack": "^0.8.x",
+    "eslint": "2.x",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-import": "^1.12.0",
+    "eslint-plugin-jsx-a11y": "^2.0.1",
+    "eslint-plugin-react": "^5.2.2",
+    "html-webpack-plugin": "^2.22.0"
+  }
+}

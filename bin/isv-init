@@ -1,0 +1,99 @@
+#!/usr/bin/env node
+
+require('colorful').colorful();
+
+var inquirer = require('inquirer');
+var program = require('commander');
+var vfs = require('vinyl-fs');
+var fs = require('fs');
+var through = require('through2');
+var path = require('path');
+var join = path.join;
+var basename = path.basename;
+
+var boisPath = join(__dirname, '../boilerplate');
+var boiAndPath = getBoiAndDesc(boisPath);
+var dest = process.cwd();
+var cwd = '';
+
+var choices = Object.keys(boiAndPath).map(function(name){
+  return name + ' - ' + boiAndPath[name].desc;
+});
+
+program
+  .version(require('../package').version, '-v, --version')
+  .usage('<command> [options]')
+  .on('--help', printHelp)
+  .parse(process.argv);
+
+var subcmd = program.args[0];
+if (!subcmd) {
+  inquirer.prompt({
+    type: "list",
+    name: "name",
+    message: "Which scaffold you want to use?",
+    choices: choices
+  }).then(function (answers) {
+    var name = answers.name.split(' - ')[0];
+    cwd = boiAndPath[name].path;
+    copyFilesToDest();
+  });
+} else {
+
+}
+
+//console.log(subcmd,program)
+
+function getBoiAndDesc(boisPath) {
+  var bois = fs.readdirSync(boisPath);
+  return bois.reduce(function (bad, boi) {
+    bad[boi] = {
+      path: join(boisPath, boi),
+      desc: JSON.parse(fs.readFileSync(join(boisPath, boi, 'package.json'), 'utf-8')).description || boi + ' scaffold'
+    };
+
+    return bad;
+  }, []);
+}
+
+function printHelp() {
+
+  console.log('  M-init Is A Mobile-Oriented Scaffold Management Tool For Alipay'.to.bold.color);
+  console.log();
+  console.log('  Subcommands:'.to.bold.blue.color);
+  Object.keys(boiAndPath).forEach(function (name) {
+    console.log('    ' + name.to.magenta.color + ' '.repeat(25 - name.length), boiAndPath[name].desc);
+  });
+  console.log();
+}
+
+function copyFilesToDest() {
+  vfs.src('**/*', {
+      cwd: cwd,
+      cwdbase: true,
+      dot: true
+    })
+    .pipe(template(dest))
+    .pipe(vfs.dest(dest))
+    .on('end', function () {
+      fs.renameSync(path.join(dest, 'gitignore'), path.join(dest, '.gitignore'));
+      require('../lib/install');
+    })
+    .resume();
+
+  function template(dest) {
+    return through.obj(function (file, enc, cb) {
+      if (!file.stat.isFile()) {
+        return cb();
+      }
+
+      console.log('Write %s', simplifyFilename(join(dest, basename(file.path))));
+      this.push(file);
+      cb();
+    });
+  }
+
+  function simplifyFilename(filename) {
+    return filename.replace(process.cwd(), ".");
+  }
+}
