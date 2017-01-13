@@ -2,6 +2,7 @@
 // 得到 webpack
 var webpack = require('atool-build/lib/webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var px2rem = require('postcss-plugin-px2rem');
 var path = require('path');
 
 module.exports = function(webpackConfig) {
@@ -14,7 +15,7 @@ module.exports = function(webpackConfig) {
   Object.keys(webpackConfig.entry).forEach(function(entry) {
     webpackConfig.plugins.push(new HtmlWebpackPlugin({
       inject: false,
-      minify:{ 
+      minify:{
         collapseWhitespace: true
       },
       filename: entry + '.html',
@@ -29,6 +30,11 @@ module.exports = function(webpackConfig) {
     style: true, // if true, use less
     libraryName:'antd-mobile'
   }]);
+
+  webpackConfig.postcss.push(px2rem({
+    // 设置基础字体大小，默认为 100，需与你设置的高清方案基础字体一致
+    rootValue: 100,
+  }));
 
   // Production Environment, reference to an external resource of React / ReactDOM
   if (process.env.NODE_ENV === 'production') {
@@ -47,6 +53,15 @@ module.exports = function(webpackConfig) {
 
       return true;
     }
+  });
+
+  // antd-mobile svg 处理，如果不需要用到 antd 内的 svg 可以把这段去掉
+  webpackConfig.module.loaders = webpackConfig.module.loaders.filter(loader => {
+    return loader.test.toString().indexOf('.svg') === -1;
+  });
+  webpackConfig.module.loaders.unshift({
+    test: /\.svg$/,
+    loader: 'svg-sprite',
   });
 
   // 返回 webpack 配置对象
