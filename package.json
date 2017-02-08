@@ -1,6 +1,6 @@
 {
   "name": "isv-init",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "isv-init is an antd-mobile-oriented scaffold management tool for isv.",
   "repository": {
     "type": "git",
