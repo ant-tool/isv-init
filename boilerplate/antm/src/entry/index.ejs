@@ -22,4 +22,12 @@
 <div id="react-content"></div>
 </body>
 <script src="<%= htmlWebpackPlugin.options.entry %>.js"></script>
+<script type="text/javascript" src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
+<script type="text/javascript">
+  if ('addEventListener' in document) {
+    window.addEventListener('load', function() {
+      FastClick.attach(document.body);
+    }, false);
+  }
+</script>
 </html>
