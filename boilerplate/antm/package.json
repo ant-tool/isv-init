@@ -4,7 +4,7 @@
   "description": "A Project With Antd-Mobile Buildin",
   "scripts": {
     "start": "NODE_ENV=development dora -p 8001 --plugins webpack",
-    "test": "atool-test",
+    "test": "atool-test-mocha",
     "lint": "eslint --ext .js,.jsx src",
     "build": "NODE_ENV=production atool-build -o www --config ./webpack.config.js"
   },
@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "atool-build": "^0.9.0",
-    "atool-test": "^0.5.1",
+    "atool-test-mocha": "^0.1.6",
     "babel-eslint": "~6.0.0",
     "babel-plugin-import": "^1.0.0",
     "dora": "^0.4.0",
