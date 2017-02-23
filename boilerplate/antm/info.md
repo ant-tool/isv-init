@@ -19,7 +19,6 @@
   "start": "NODE_ENV=development dora -p 8001 --plugins webpack",
   "test": "atool-test",
   "lint": "eslint --ext .js,.jsx src",
-  "simulator": "NODE_ENV=development dora -p 8001 --plugins 'webpack,livereload,config-manager?path=./mobile.config.js|simOpts,simulator'",
   "build": "NODE_ENV=productions moggles -o www --config ./webpack.config.js",
 },
 "entry": {
@@ -31,5 +30,4 @@
 * `start` 启动调试服务器，在 chrome 内测
 * `test` 运行测试用例
 * `lint` 代码规范检测
-* `simulator` 启动调试服务器，在模拟器内调试
 * `build` 进行静态资源的构建
